@@ -1,4 +1,4 @@
-# SQL_Coffee_Shop_Sales_Analysis
+# SQL_Coffee_Sales_Analysis
 
 We have Transaction records for **Maven Roasters**, a fictitious coffee shop operating out of three NYC locations. Dataset includes the transaction date, timestamp and location, along with product-level details.
 This project aims to analyze the sales data for the coffee shop to enhance revenue through optimum operational strategy.
@@ -25,10 +25,14 @@ BUSINESS QUESTIONS :
 
    **RECOMENDATIONS**
 
-**Daily Operational recommendation:** Monday, Thursday and Friday are the busy days of the week. Inventory management is important during the weekdays. Saturday and Sunday have low transactions. To increase the footfall, store can come up with strategy of weekend offers specially in Summers as summer activity causes rise in sales and transactions.
-**Location wise Operational recommendation:** Shop sales, in general is significantly low post 8pm in the evening. As we dig dip, it could be seen that in Astoria shop is closed within 8pm even after having its revenue at peak post 7pm. On the other, it is not profitable to open the shop at Hell’s Kitchen post 8pm and Lower Manhattan post 7pm. Hence the coffee shop should reduce manpower in L. Manhattan and Hell’s Kitchen and reallocate them to Astoria keeping it open after 7pm in order to improve revenue>profit margin
-**Price Range Adjustment:** Since the top revenue-generating categories (like Coffee and Tea) have a low price range, strategically increasing prices could enhance profitability without significantly impacting sales volume. This should be done carefully to maintain perceived value.
-If the highest-priced item (Civet Cat) is not generating enough sales or transactions, it may be wise to reevaluate its inclusion. If it's not aligning with customer demand, removing it could free up resources and reduce inventory costs.
+**Daily Operational recommendation:** Monday, Thursday and Friday are the busy days of the week. **Inventory management is important during the weekdays**. Saturday and Sunday have low transactions. To increase the footfall, store can come up with **strategy of weekend offers specially in Summers** as summer activity causes rise in sales and transactions.
+
+**Location wise Operational recommendation:** Shop sales, in general is significantly low post 8pm in the evening. As we dig dip, it could be seen that in Astoria shop is closed within 8pm even after having its revenue at peak post 7pm. On the other, it is not profitable to open the shop at Hell’s Kitchen post 8pm and Lower Manhattan post 7pm. Hence the coffee shop should reduce manpower in L. Manhattan and Hell’s Kitchen and reallocate them to **Astoria keeping it open after 7pm in order to improve revenue-profit margin**
+
+**Price Range Adjustment:** Since the top revenue-generating categories (**like Coffee and Tea**) have a low price range, **strategically increasing prices could enhance profitability without significantly impacting sales volume**. This should be done carefully to maintain perceived value.
+If the highest-priced item **(Civet Cat)** is not generating enough sales or transactions, it may be wise to **reevaluate its inclusion**. If it's not aligning with customer demand, removing it could free up resources and reduce inventory costs.
 For Branded and Pckgd Chocos categories with low revenue and transactions despite a high price range, consider reviewing the product offerings in this category. If they’re not selling, you might want to either lower prices, offer promotions, or discontinue them altogether.
-**Menu Card Changes:** Simplifying the menu by removing less popular Flavours can streamline operations and reduce complexity, potentially improving customer experience and increasing sales for the remaining items.
-**Inventory Management:** Reducing the variety of products that aren’t moving can help minimize tied-up capital and improve profitability. This is especially relevant for high-cost items that aren’t selling well.
+
+**Menu Card Changes:** Simplifying the menu by **removing** less popular **Flavors and Packaged Chocolates** can streamline operations and reduce complexity, potentially improving customer experience and increasing sales for the remaining items.
+
+**Inventory Management:** **Reducing the variety of products** that aren’t moving can help minimize tied-up capital and **improve profitability**. This is especially relevant for high-cost items that aren’t selling well.
