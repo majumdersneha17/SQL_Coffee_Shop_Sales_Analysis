@@ -1,38 +1,161 @@
 # SQL_Coffee_Sales_Analysis
 
-We have Transaction records for **Maven Roasters**, a fictitious coffee shop operating out of three NYC locations. Dataset includes the transaction date, timestamp and location, along with product-level details.
-This project aims to analyze the sales data for the coffee shop to enhance revenue through optimum operational strategy.
-The analysis also aims to demonstrate **data cleaning and manipulation skills, various visualization technique** that could be resulted to come up with meaningful insight out of the data .
+# ☕ Coffee Sales Analysis Dashboard  
 
-BUSINESS QUESTIONS : 
-**How Total order vary by day of the week :** The busiest day of the week is **Friday**, however in general Monday, Thursday and Friday are the busy days of the week with a total transaction of more than 21500 a day. **Saturday** is the slowest day. Weekend days in general have low transactions
+## 📖 Overview  
+We analyzed transaction data for **Maven Roasters**, a fictitious coffee shop with three NYC locations, to derive actionable insights. This project demonstrates data cleaning, transformation, and visualization techniques using **SQL** and **Excel**.
 
-**WHAT ARE PEAK ORDERING HOURS :** **Morning** is the peak transaction time possibly because of the office hours.**10-11 am sees most of the traffic across 3 locations**. The rise in order takes place post 7 am and that continues till 11 am in the morning. From 8am onwards each hour sees around 18K transaction till 11am. **Post 7pm transaction drastically falls down**
+---
 
-**WHAT is the monthly sales trend :** As data shows, after February the Monthly Revenue keeps on rising. This is clearly visible that summer months generate huge revenue due to increased public activities across NYC for the coffee shop
+## 🎯 Objectives  
+- 🔍 Understand sales trends by day, hour, and month.  
+- 🏆 Identify top-performing products and categories.  
+- 📈 Optimize operational efficiency and pricing strategy.  
+- 🎨 Present insights through a dynamic Power BI dashboard.
 
-**Best performing categories :** **Coffee** is the highest revenue generating category followed by **Tea**. Branded, Loose Tea, Flavours and Pckgd chocolates together generate only around $37K. The product line within these categories needs to be analyzed and if needed should be removed from the menu to maximize profit for the shop
+---
 
-**WHAT IS THE PRICE RANGE FOR EACH CATEGORY :** Coffee Beans category has the highest max price and Branded has the highest minimum price. On the other hand **high revenue generating categories such as Coffee, Tea have low price range**. Data shows Flavours category has no price variation across its product line
+## 📊 Data Model  
 
-**Top 10 products :** **Barista Espresso is the most revenue generating product** followed by Brewed Chai tea and Hot Chocolate. Brewed Chai tea has the highest transaction followed by Gourmet Brewed coffee and Barista Espresso. Proper inventory needs to be checked and maintained for these poplar products as among 29 unique products only these 10 contribute nearly 80% to the total Revenue
+The dataset contains a single table with transaction data.
 
-**Is there any exception in top products across locations :** As per analysis the **top products are consistent across the three locations** in NYC. Unlike other two locations , in Astoria Herbal Tea snatched the 5th top position in terms of revenue
+## 🛠️ Tools Used  
+- 🗄️ **SQL**: Data cleaning and transformation.  
+- 📑 **Excel**:: Interactive visualizations and insights.
 
-**What are slow hours across the stores :** **Post 8pm both Hell’s Kitchen and Lower Manhattan see slow hours in terms of revenue**. Astoria’s revenue is still satisfying even in slow hours.
+- ## 🎯 SQL Highlights  
 
-**WHAT IS THE SALES SCENARIO POST 5 PM ACROSS THE STORE LOCATIONS :** It seems Astoria gets closed between 8 pm. It is visible that even during the closing hours the revenue generation is significantly high. However, both Hell’s Kitchen and Lower Manhattan keeps it open beyond 8pm.
+### **Key Queries & Functions**  
+The project makes extensive use of advanced SQL techniques, including:  
+- **Aggregations:** `SUM()`, `COUNT()`, `MAX()`, `MIN()` for revenue, transactions, and price analysis.  
+- **Date & Time Functions:** `DAYNAME()`, `MONTHNAME()`, `HOUR()` to analyze trends across time dimensions.  
+- **Ranking:** `RANK()` for identifying top products and low-revenue hours across stores.  
+- **Window Functions:** `SUM() OVER()`, `RANK() OVER()` for revenue percentage calculations and performance ranking.  
+- **CTEs & Views:** Modularized queries for simplifying complex logic, e.g., `Storewise_hourly_sales`.
+- 
+## ⚙️ Database Setup and Data Loading  
 
-   **RECOMENDATIONS**
+### **Step 1: Create the Database and Table**  
+Run the following SQL commands to set up the database and table structure in your SQL environment (e.g., MySQL, MariaDB):  
 
-**Daily Operational recommendation:** Monday, Thursday and Friday are the busy days of the week. **Inventory management is important during the weekdays**. Saturday and Sunday have low transactions. To increase the footfall, store can come up with **strategy of weekend offers specially in Summers** as summer activity causes rise in sales and transactions.
+```sql
+-- Create the database
+CREATE DATABASE COFFEE_SALES;
 
-**Location wise Operational recommendation:** Shop sales, in general is significantly low post 8pm in the evening. As we dig dip, it could be seen that in Astoria shop is closed within 8pm even after having its revenue at peak post 7pm. On the other, it is not profitable to open the shop at Hell’s Kitchen post 8pm and Lower Manhattan post 7pm. Hence the coffee shop should reduce manpower in L. Manhattan and Hell’s Kitchen and reallocate them to **Astoria keeping it open after 7pm in order to improve revenue-profit margin**
+-- Switch to the created database
+USE COFFEE_SALES;
 
-**Price Range Adjustment:** Since the top revenue-generating categories (**like Coffee and Tea**) have a low price range, **strategically increasing prices could enhance profitability without significantly impacting sales volume**. This should be done carefully to maintain perceived value.
-If the highest-priced item **(Civet Cat)** is not generating enough sales or transactions, it may be wise to **reevaluate its inclusion**. If it's not aligning with customer demand, removing it could free up resources and reduce inventory costs.
-For Branded and Pckgd Chocos categories with low revenue and transactions despite a high price range, consider reviewing the product offerings in this category. If they’re not selling, you might want to either lower prices, offer promotions, or discontinue them altogether.
+-- Create the table structure
+CREATE TABLE coffee_sales_analysis (
+    transaction_id INT,
+    transaction_date VARCHAR(50),
+    transaction_time VARCHAR(50),
+    transaction_qty INT,
+    store_id INT,
+    store_location VARCHAR(50),
+    product_id INT,
+    unit_price DOUBLE,
+    product_category VARCHAR(50),
+    product_type VARCHAR(50),
+    product_detail VARCHAR(50),
+    product_size VARCHAR(50),
+    CONSTRAINT pk PRIMARY KEY (transaction_id)
+);
 
-**Menu Card Changes:** Simplifying the menu by **removing** less popular **Flavors and Packaged Chocolates** can streamline operations and reduce complexity, potentially improving customer experience and increasing sales for the remaining items.
+### Step 2: Loading Data
 
-**Inventory Management:** **Reducing the variety of products** that aren’t moving can help minimize tied-up capital and **improve profitability**. This is especially relevant for high-cost items that aren’t selling well.
+```bash
+# Log in to MySQL
+mysql -u [username] -p
+
+# Use the COFFEE_SALES database
+USE COFFEE_SALES;
+
+# Load data into the table
+LOAD DATA INFILE '/path/to/coffee_sales_data.csv' 
+INTO TABLE coffee_sales_analysis 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"' 
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS 
+(transaction_id, transaction_date, transaction_time, transaction_qty, store_id, store_location, product_id, unit_price, product_category, product_type, product_detail, product_size);
+
+### Step 3: Update and Modify Table Data
+
+```sql
+-- Convert the transaction_date to proper date format
+UPDATE coffee_sales_analysis
+SET transaction_date = STR_TO_DATE(transaction_date, '%d-%m-%Y');
+
+-- Modify the transaction_time column to TIME data type
+ALTER TABLE coffee_sales_analysis
+MODIFY transaction_time TIME;
+
+
+## 📌 Key Business Questions  
+
+### 1️⃣ **How do total orders vary by day of the week?**  
+- **Insights:**
+  - Friday is the busiest day, followed by Monday and Thursday, each with over 21.5K transactions.
+  - Saturday is the slowest day. Weekend transactions are generally low.  
+
+### 2️⃣ **What are the peak ordering hours?**  
+- **Insights:**
+  - Morning hours (7 AM - 11 AM) see the most transactions, peaking between 10 AM and 11 AM.  
+  - Post-7 PM, transactions drop sharply across all locations except Astoria.  
+
+### 3️⃣ **What is the monthly sales trend?**  
+- **Insights:**
+  - Revenue rises consistently after February, with summer months contributing the highest sales due to increased outdoor activities.
+
+### 4️⃣ **What are the best-performing categories?**  
+- **Insights:**
+  - Coffee and Tea dominate sales.  
+  - Flavors and Packaged Chocolates generate only ~$37K and should be reevaluated for menu optimization.  
+
+### 5️⃣ **What is the price range for each category?**  
+- **Insights:**
+  - Coffee Beans have the highest price range.  
+  - Flavors show no price variation, indicating potential pricing inefficiency.  
+
+### 6️⃣ **What are the top 10 products?**  
+- **Insights:**
+  - *Barista Espresso* generates the highest revenue, followed by *Brewed Chai Tea* and *Hot Chocolate*.  
+  - These top 10 products contribute 80% of total revenue. Inventory for these items should be prioritized.  
+
+### 7️⃣ **Are there exceptions in top products across locations?**  
+- **Insights:**
+  - Top products are consistent across locations, except Astoria, where Herbal Tea ranks higher.  
+
+### 8️⃣ **What are the slow hours across stores?**  
+- **Insights:**
+  - After 8 PM, Hell’s Kitchen and Lower Manhattan see a significant revenue drop.  
+  - Astoria performs well even during slow hours.  
+
+### 9️⃣ **What is the sales scenario post-5 PM?**  
+- **Insights:**
+  - Astoria’s revenue remains high until closing at 8 PM.  
+  - Hell’s Kitchen and Lower Manhattan remain open longer but with low sales.
+
+## 📈 Recommendations  
+
+1. **📅 Daily Operations**  
+   - Focus inventory on Mondays, Thursdays, and Fridays.  
+   - Introduce summer weekend promotions to boost footfall on slower weekend days.  
+
+2. **🏢 Location-Specific Changes**  
+   - Extend Astoria’s operating hours beyond 8 PM to capitalize on evening revenue.  
+   - Reduce staffing at Hell’s Kitchen and Lower Manhattan after 8 PM.  
+
+3. **💵 Pricing Strategy**  
+   - Slightly increase prices for Coffee and Tea to enhance profitability without losing demand.  
+   - Reevaluate underperforming high-priced items like Civet Cat Coffee.  
+
+4. **📋 Menu Optimization**  
+   - Remove low-performing categories like Flavors and Packaged Chocolates.  
+   - Streamline the menu to improve customer experience and reduce inventory complexity.  
+
+5. **📦 Inventory Management**  
+   - Prioritize inventory for top-performing products (*Barista Espresso*, *Brewed Chai Tea*, etc.).  
+   - Reduce stock for slow-moving and high-cost items.  
+
