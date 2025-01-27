@@ -32,66 +32,6 @@ The project makes extensive use of advanced SQL techniques, including:
 - **Ranking:** `RANK()` for identifying top products and low-revenue hours across stores.  
 - **Window Functions:** `SUM() OVER()`, `RANK() OVER()` for revenue percentage calculations and performance ranking.  
 - **CTEs & Views:** Modularized queries for simplifying complex logic, e.g., `Storewise_hourly_sales`.
-- 
-## ⚙️ Database Setup and Data Loading  
-
-### **Step 1: Create the Database and Table**  
-Run the following SQL commands to set up the database and table structure in your SQL environment (e.g., MySQL, MariaDB):  
-
-```sql
--- Create the database
-CREATE DATABASE COFFEE_SALES;
-
--- Switch to the created database
-USE COFFEE_SALES;
-
--- Create the table structure
-CREATE TABLE coffee_sales_analysis (
-    transaction_id INT,
-    transaction_date VARCHAR(50),
-    transaction_time VARCHAR(50),
-    transaction_qty INT,
-    store_id INT,
-    store_location VARCHAR(50),
-    product_id INT,
-    unit_price DOUBLE,
-    product_category VARCHAR(50),
-    product_type VARCHAR(50),
-    product_detail VARCHAR(50),
-    product_size VARCHAR(50),
-    CONSTRAINT pk PRIMARY KEY (transaction_id)
-);
-
-### Step 2: Loading Data
-
-```bash
-# Log in to MySQL
-mysql -u [username] -p
-
-# Use the COFFEE_SALES database
-USE COFFEE_SALES;
-
-# Load data into the table
-LOAD DATA INFILE '/path/to/coffee_sales_data.csv' 
-INTO TABLE coffee_sales_analysis 
-FIELDS TERMINATED BY ',' 
-ENCLOSED BY '"' 
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS 
-(transaction_id, transaction_date, transaction_time, transaction_qty, store_id, store_location, product_id, unit_price, product_category, product_type, product_detail, product_size);
-
-### Step 3: Update and Modify Table Data
-
-```sql
--- Convert the transaction_date to proper date format
-UPDATE coffee_sales_analysis
-SET transaction_date = STR_TO_DATE(transaction_date, '%d-%m-%Y');
-
--- Modify the transaction_time column to TIME data type
-ALTER TABLE coffee_sales_analysis
-MODIFY transaction_time TIME;
-
-
 ## 📌 Key Business Questions  
 
 ### 1️⃣ **How do total orders vary by day of the week?**  
@@ -158,4 +98,62 @@ MODIFY transaction_time TIME;
 5. **📦 Inventory Management**  
    - Prioritize inventory for top-performing products (*Barista Espresso*, *Brewed Chai Tea*, etc.).  
    - Reduce stock for slow-moving and high-cost items.  
+- 
+## ⚙️ Database Setup and Data Loading  
+
+### **Step 1: Create the Database and Table**  
+Run the following SQL commands to set up the database and table structure in your SQL environment (e.g., MySQL, MariaDB):  
+
+```sql
+-- Create the database
+CREATE DATABASE COFFEE_SALES;
+
+-- Switch to the created database
+USE COFFEE_SALES;
+
+-- Create the table structure
+CREATE TABLE coffee_sales_analysis (
+    transaction_id INT,
+    transaction_date VARCHAR(50),
+    transaction_time VARCHAR(50),
+    transaction_qty INT,
+    store_id INT,
+    store_location VARCHAR(50),
+    product_id INT,
+    unit_price DOUBLE,
+    product_category VARCHAR(50),
+    product_type VARCHAR(50),
+    product_detail VARCHAR(50),
+    product_size VARCHAR(50),
+    CONSTRAINT pk PRIMARY KEY (transaction_id)
+);
+### Step 2: Loading Data
+
+```bash
+# Log in to MySQL
+mysql -u [username] -p
+
+# Use the COFFEE_SALES database
+USE COFFEE_SALES;
+
+# Load data into the table
+LOAD DATA INFILE '/path/to/coffee_sales_data.csv' 
+INTO TABLE coffee_sales_analysis 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"' 
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS 
+(transaction_id, transaction_date, transaction_time, transaction_qty, store_id, store_location, product_id, unit_price, product_category, product_type, product_detail, product_size);
+
+### Step 3: Update and Modify Table Data
+
+```sql
+-- Convert the transaction_date to proper date format
+UPDATE coffee_sales_analysis
+SET transaction_date = STR_TO_DATE(transaction_date, '%d-%m-%Y');
+
+-- Modify the transaction_time column to TIME data type
+ALTER TABLE coffee_sales_analysis
+MODIFY transaction_time TIME;
+
 
